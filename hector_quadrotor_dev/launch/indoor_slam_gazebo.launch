@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<launch>
+
+  <!-- Start Gazebo with wg world running in (max) realtime -->
+  <include file="$(find hector_gazebo_worlds)/launch/willow_garage.launch"/>
+
+  <!-- Spawn simulated quadrotor uav -->
+  <include file="$(find hector_quadrotor_gazebo)/launch/spawn_quadrotor.launch" >
+    <arg name="model" value="$(find hector_quadrotor_description)/urdf/quadrotor_hokuyo_utm30lx.gazebo.xacro"/>
+    <arg name="controllers" value="
+        controller/attitude
+        controller/velocity
+        controller/position
+        "/>
+  </include>
+
+  <!-- Start SLAM system -->
+  <include file="$(find hector_mapping)/launch/mapping_default.launch">
+    <arg name="odom_frame" value="world"/>
+  </include>
+
+
+</launch>
